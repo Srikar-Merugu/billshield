@@ -27,13 +27,17 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   // Every number in the message is computed here, by code.
   const facts: MessageFacts = {
     COMPANY: view.company ?? "your company",
-    INVOICE_REF: view.invoiceRef ? `invoice ${view.invoiceRef}` : "my latest bill",
+    INVOICE_REF: view.invoiceRef ?? "see attached bill",
     BILL_DATE: view.billDate
       ? new Date(view.billDate).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
       : "recently",
     PROMISE: view.promiseSummary,
     DISPUTED_LINES: disputed
-      .map((l) => `- ${l.label}: charged ${money(l.amount)}, should be ${money(l.promisedAmount ?? 0)}`)
+      .map((l) =>
+        l.status === "disputed"
+          ? `- ${l.label}: ${money(l.amount)}, which I never agreed to`
+          : `- ${l.label}: charged ${money(l.amount)}, promised ${money(l.promisedAmount ?? 0)}`,
+      )
       .join("\n"),
     CHARGED: money(disputed.reduce((a, l) => a + l.amount, 0)),
     PROMISED: money(disputed.reduce((a, l) => a + (l.promisedAmount ?? 0), 0)),
@@ -48,6 +52,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   const context = [
     `Company: ${view.company ?? "unknown"} (${view.documentType ?? "bill"})`,
     `Promise: ${view.promiseSummary}`,
+    `Invoice number on the bill: ${view.invoiceRef ? "yes" : "no"}`,
     ...disputed.map((l) => `Disputed line: ${l.label} (${l.status === "wrong" ? "charged more than promised" : "never agreed to"})`),
     `Tax on the difference: ${hasTax ? "yes" : "none"}`,
     `Customer name given: ${userName ? "yes" : "no"}`,

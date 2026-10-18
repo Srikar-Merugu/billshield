@@ -127,6 +127,9 @@ const MESSAGE_SYSTEM = `You write short complaint messages that customers send t
 Rules:
 - Use placeholders for every fact: ${PLACEHOLDERS.map((p) => `{{${p}}}`).join(", ")}.
 - Never type a digit or a currency symbol yourself. All numbers come from placeholders.
+- {{INVOICE_REF}} is the bare invoice number: write "Invoice {{INVOICE_REF}}" once. Skip it if there is no invoice number.
+- {{DISPUTED_LINES}} is a ready-made bullet list: put it on its own lines and don't repeat its contents.
+- If every disputed line was "never agreed to", don't use {{PROMISED}}; say the charge was never requested.
 - Polite, firm, specific. Say what was promised, what was charged, and ask for the refund of {{REFUND_TOTAL}}.
 - Mention the attached bill/photo. End with {{USER_NAME}}.
 - Email: start with a "Subject:" line, then a formal message under 120 words.

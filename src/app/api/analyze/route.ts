@@ -20,6 +20,15 @@ async function readFile(f: File | null): Promise<(FileInput & { bytes: Buffer })
 
 class UserError extends Error {}
 
+// Invoice numbers are needed in the complaint and aren't personal, so they keep their digits.
+// Only emails are stripped, and anything that looks like a phone number is dropped.
+function invoiceRef(ref: string | null): string | null {
+  if (!ref) return null;
+  const clean = ref.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, "").trim().slice(0, 40);
+  if (/^\+?[\d\s-]{10,}$/.test(clean)) return null;
+  return clean || null;
+}
+
 async function storeFile(deviceId: string, kind: string, f: { mediaType: string; bytes: Buffer } | null) {
   if (!f || !process.env.BLOB_READ_WRITE_TOKEN) return null;
   const ext = f.mediaType === "application/pdf" ? "pdf" : f.mediaType.split("/")[1];
@@ -78,7 +87,7 @@ export async function POST(req: Request) {
       insert into bill (device_id, promise_id, company, document_type, bill_date, invoice_ref, currency,
                         printed_total, verdict, photo_url, promise_photo_url)
       values (${deviceId}, ${promiseId}, ${company}, ${maskText(extraction.document_type)}, ${billDate},
-              ${maskNullable(extraction.invoice_ref)}, ${extraction.currency || "INR"}, ${extraction.printed_total},
+              ${invoiceRef(extraction.invoice_ref)}, ${extraction.currency || "INR"}, ${extraction.printed_total},
               'pending', ${photoUrl}, ${promisePhotoUrl})
       returning id`) as { id: string }[];
     const billId = billRows[0].id;
