@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Test bill 01</title>
+<style>
+  body{font-family:Helvetica,Arial,sans-serif;color:#222;margin:0;padding:32px;background:#fff;position:relative}
+  .wm{position:fixed;top:38%;left:-5%;width:110%;text-align:center;transform:rotate(-24deg);font-size:64px;font-weight:800;color:rgba(220,0,0,.13);pointer-events:none}
+  .banner{background:#c00;color:#fff;text-align:center;font-weight:700;padding:8px;margin-bottom:20px;letter-spacing:.5px}
+  .hdr{display:flex;justify-content:space-between;border-bottom:3px solid #1f4e9c;padding-bottom:12px}
+  .logo{font-size:28px;font-weight:800;color:#1f4e9c}.logo span{color:#f39200}
+  h2{margin:22px 0 8px;font-size:17px;color:#1f4e9c}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  td,th{padding:7px 8px;border-bottom:1px solid #ddd;text-align:left}
+  td.r,th.r{text-align:right}
+  .tot td{font-weight:700;border-top:2px solid #222}
+  .box{display:flex;gap:24px}.box>div{flex:1}
+  .big{font-size:30px;font-weight:800}
+  .small{font-size:12px;color:#666}
+</style></head><body>
+<div class="wm">TEST BILL — NOT REAL</div>
+<div class="banner">SYNTHETIC TEST DATA — fictional company — for developer testing only — not evidence</div>
+
+<div class="hdr">
+  <div><div class="logo">Demo<span>Tel</span></div><div class="small">DemoTel Mobile (fictional) · GSTIN: TEST-0000000000</div></div>
+  <div style="text-align:right"><b>Tax Invoice</b><br>Invoice No: TEST-2026-09-001<br>Bill date: 12 Sep 2026</div>
+</div>
+
+<div class="box" style="margin-top:18px">
+  <div>
+    <b>Customer:</b> Test User<br>
+    Mobile No: XXXXXX1234<br>
+    Account No: XXXX-XX-0001<br>
+    Plan: <b>Smart 499</b> — Unlimited calls, 2GB/day, 100 SMS/day<br>
+    Billing period: 10 Aug 2026 – 09 Sep 2026
+  </div>
+  <div style="text-align:right">
+    Amount payable<br><span class="big">₹823.64</span><br>
+    Due date: 27 Sep 2026
+  </div>
+</div>
+
+<h2>Account summary</h2>
+<table>
+  <tr><td>Previous bill amount</td><td class="r">588.82</td></tr>
+  <tr><td>Payment received (05 Sep 2026) — thank you</td><td class="r">-588.82</td></tr>
+  <tr><td>Balance carried forward</td><td class="r">0.00</td></tr>
+</table>
+
+<h2>Charges this bill</h2>
+<table>
+  <tr><th>Description</th><th>Period</th><th class="r">Amount (₹)</th></tr>
+  <tr><td>Monthly plan rental — Smart 499</td><td>10 Aug – 09 Sep</td><td class="r">499.00</td></tr>
+  <tr><td>CallerTune Plus Pack (activated 18 Aug 2026)</td><td>18 Aug – 09 Sep</td><td class="r">199.00</td></tr>
+  <tr><td>Usage beyond plan (calls / data / SMS)</td><td>—</td><td class="r">0.00</td></tr>
+  <tr><td>Late payment fee</td><td>—</td><td class="r">0.00</td></tr>
+  <tr class="tot"><td>Taxable value</td><td></td><td class="r">698.00</td></tr>
+  <tr><td>CGST @ 9%</td><td></td><td class="r">62.82</td></tr>
+  <tr><td>SGST @ 9%</td><td></td><td class="r">62.82</td></tr>
+  <tr class="tot"><td>Total amount payable</td><td></td><td class="r">823.64</td></tr>
+</table>
+
+<h2>Your recent bills</h2>
+<table>
+  <tr><th>Jun 2026</th><th>Jul 2026</th><th>Aug 2026</th><th>Sep 2026</th></tr>
+  <tr><td>588.82</td><td>588.82</td><td>588.82</td><td><b>823.64</b></td></tr>
+</table>
+
+<p class="small" style="margin-top:28px">This document is synthetic test data created for building and testing the BillShield app. DemoTel is not a real company. It must not be used as a real bill or as user-testing evidence.</p>
+</body></html>
